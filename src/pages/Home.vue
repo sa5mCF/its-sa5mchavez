@@ -8,6 +8,8 @@ import Skills from '@/components/Skills.vue'
 import Projects from '@/components/Projects.vue'
 import Experience from '@/components/Experience.vue'
 import Writing from '@/components/Writing.vue'
+import Now from '@/components/Now.vue'
+import Influences from '@/components/Influences.vue'
 import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()
@@ -17,9 +19,11 @@ const { t } = useI18n()
   <main class="home">
     <Hero />
     <Skills />
-    <Projects />
+    <!--<Projects />-->
     <Experience />
-    <Writing />
+    <!--<Writing />-->
+    <Now />
+    <Influences />
 
     <!-- Footer -->
     <footer class="home__footer">

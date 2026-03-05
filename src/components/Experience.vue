@@ -1,38 +1,24 @@
 <script setup>
 import { useI18n } from 'vue-i18n'
+import { computed } from 'vue'
 
-const { t } = useI18n()
+const { t, tm, rt } = useI18n()
 
 /**
  * Experience Section
  * Timeline of professional experience
  */
-const experiences = [
-  {
-    role: 'Full Stack Developer',
-    company: t('experience.placeholder.company', { n: 1 }),
-    period: `2024 — ${t('experience.placeholder.periodPresent')}`,
-    description: t('experience.placeholder.description'),
-    tags: ['Vue.js', 'Node.js', 'PostgreSQL'],
-    current: true,
-  },
-  {
-    role: 'Software Engineer',
-    company: t('experience.placeholder.company', { n: 2 }),
-    period: '2022 — 2024',
-    description: t('experience.placeholder.description'),
-    tags: ['React', 'Python', 'AWS'],
-    current: false,
-  },
-  {
-    role: 'Junior Developer',
-    company: t('experience.placeholder.company', { n: 3 }),
-    period: '2020 — 2022',
-    description: t('experience.placeholder.description'),
-    tags: ['JavaScript', 'HTML/CSS', 'MySQL'],
-    current: false,
-  },
-]
+const experiences = computed(() => {
+  const items = tm('experience.items')
+  return Array.isArray(items) ? items.map(item => ({
+    role: rt(item.role),
+    company: rt(item.company),
+    period: rt(item.period),
+    description: Array.isArray(item.description) ? item.description.map(d => rt(d)) : [rt(item.description)],
+    tags: Array.isArray(item.tags) ? item.tags.map(t => rt(t)) : [],
+    current: item.current
+  })) : []
+})
 </script>
 
 <template>
@@ -68,7 +54,17 @@ const experiences = [
               </div>
               <span class="experience__period">{{ exp.period }}</span>
             </div>
-            <p class="experience__description">{{ exp.description }}</p>
+            
+            <ul class="experience__description-list">
+              <li 
+                v-for="(point, pIndex) in exp.description" 
+                :key="pIndex"
+                class="experience__description-item"
+              >
+                {{ point }}
+              </li>
+            </ul>
+
             <div class="experience__tags">
               <span
                 v-for="tag in exp.tags"
@@ -164,10 +160,28 @@ const experiences = [
   border-radius: var(--radius-sm);
 }
 
-.experience__description {
+.experience__description-list {
+  padding-left: var(--space-md);
+  margin-bottom: var(--space-lg);
+  list-style: none;
+}
+
+.experience__description-item {
+  position: relative;
   color: var(--color-text-secondary);
-  line-height: 1.7;
-  margin-bottom: var(--space-md);
+  line-height: 1.6;
+  margin-bottom: var(--space-sm);
+  padding-left: var(--space-lg);
+  font-size: var(--text-base);
+}
+
+.experience__description-item::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: var(--color-accent-primary);
+  font-weight: 700;
+  opacity: 0.7;
 }
 
 .experience__tags {
