@@ -1,4 +1,8 @@
 <script setup>
+import { useI18n } from 'vue-i18n'
+
+const { locale, t } = useI18n()
+
 /**
  * Hero Section
  * Full-screen intro with name, role, and CTA
@@ -8,6 +12,10 @@ const socials = [
   { name: 'LinkedIn', url: '#', icon: 'in' },
   { name: 'Email', url: 'mailto:hello@example.com', icon: '@' },
 ]
+
+const toggleLanguage = () => {
+  locale.value = locale.value === 'es' ? 'en' : 'es'
+}
 </script>
 
 <template>
@@ -18,27 +26,35 @@ const socials = [
       <div class="hero__orb hero__orb--2" aria-hidden="true"></div>
       <div class="hero__grid-lines" aria-hidden="true"></div>
 
+      <!-- Language Switcher -->
+      <div class="hero__lang-switcher">
+        <button @click="toggleLanguage" class="hero__lang-btn glass-card">
+          <span :class="{ 'hero__lang-label--active': locale === 'en' }">EN</span>
+          <span class="hero__lang-separator">/</span>
+          <span :class="{ 'hero__lang-label--active': locale === 'es' }">ES</span>
+        </button>
+      </div>
+
       <div class="hero__content">
-        <span class="hero__greeting section-label">Hola, soy</span>
+        <span class="hero__greeting section-label">{{ t('hero.greeting') }}</span>
         <h1 class="hero__name">
           Samuel
           <span class="gradient-text">Chávez</span>
         </h1>
         <p class="hero__role">
-          Full Stack Developer &amp; Software Engineer
+          {{ t('hero.role') }}
         </p>
         <p class="hero__description section-subtitle">
-          Construyo experiencias digitales modernas con código limpio,
-          arquitectura sólida y atención al detalle.
+          {{ t('hero.description') }}
         </p>
 
         <div class="hero__actions">
           <a href="#projects" class="hero__btn hero__btn--primary">
-            Ver Proyectos
+            {{ t('hero.ctaProjects') }}
             <span class="hero__btn-arrow">→</span>
           </a>
           <a href="#experience" class="hero__btn hero__btn--secondary">
-            Mi Experiencia
+            {{ t('hero.ctaExperience') }}
           </a>
         </div>
 
@@ -58,7 +74,7 @@ const socials = [
       </div>
 
       <div class="hero__scroll-indicator">
-        <span>scroll</span>
+        <span>{{ t('hero.scroll') }}</span>
         <div class="hero__scroll-line"></div>
       </div>
     </div>
@@ -77,6 +93,33 @@ const socials = [
 .hero__container {
   position: relative;
   z-index: 2;
+}
+
+/* Language Switcher */
+.hero__lang-switcher {
+  position: absolute;
+  top: var(--space-xl);
+  right: var(--space-xl);
+  z-index: 10;
+}
+
+.hero__lang-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-xs) var(--space-md);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--color-text-muted);
+}
+
+.hero__lang-separator {
+  opacity: 0.3;
+}
+
+.hero__lang-label--active {
+  color: var(--color-accent-primary);
 }
 
 /* Decorative orbs */

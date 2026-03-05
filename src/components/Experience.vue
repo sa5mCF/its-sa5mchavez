@@ -1,4 +1,8 @@
 <script setup>
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
+
 /**
  * Experience Section
  * Timeline of professional experience
@@ -6,25 +10,25 @@
 const experiences = [
   {
     role: 'Full Stack Developer',
-    company: 'Empresa 1',
-    period: '2024 — Presente',
-    description: 'Descripción de tus responsabilidades y logros principales en este puesto.',
+    company: t('experience.placeholder.company', { n: 1 }),
+    period: `2024 — ${t('experience.placeholder.periodPresent')}`,
+    description: t('experience.placeholder.description'),
     tags: ['Vue.js', 'Node.js', 'PostgreSQL'],
     current: true,
   },
   {
     role: 'Software Engineer',
-    company: 'Empresa 2',
+    company: t('experience.placeholder.company', { n: 2 }),
     period: '2022 — 2024',
-    description: 'Descripción de tus responsabilidades y logros principales en este puesto.',
+    description: t('experience.placeholder.description'),
     tags: ['React', 'Python', 'AWS'],
     current: false,
   },
   {
     role: 'Junior Developer',
-    company: 'Empresa 3',
+    company: t('experience.placeholder.company', { n: 3 }),
     period: '2020 — 2022',
-    description: 'Descripción de tus responsabilidades y logros principales en este puesto.',
+    description: t('experience.placeholder.description'),
     tags: ['JavaScript', 'HTML/CSS', 'MySQL'],
     current: false,
   },
@@ -34,12 +38,12 @@ const experiences = [
 <template>
   <section id="experience" class="experience section">
     <div class="container">
-      <span class="section-label">// experiencia</span>
+      <span class="section-label">{{ t('experience.label') }}</span>
       <h2 class="section-title">
-        Mi <span class="gradient-text">Trayectoria</span>
+        {{ t('experience.titleP1') }} <span class="gradient-text">{{ t('experience.titleP2') }}</span>
       </h2>
       <p class="section-subtitle">
-        Un recorrido por mi carrera profesional y los proyectos que han marcado mi crecimiento.
+        {{ t('experience.subtitle') }}
       </p>
 
       <div class="experience__timeline">

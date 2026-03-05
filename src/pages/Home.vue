@@ -8,6 +8,9 @@ import Skills from '@/components/Skills.vue'
 import Projects from '@/components/Projects.vue'
 import Experience from '@/components/Experience.vue'
 import Writing from '@/components/Writing.vue'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 </script>
 
 <template>
@@ -22,11 +25,11 @@ import Writing from '@/components/Writing.vue'
     <footer class="home__footer">
       <div class="container home__footer-content">
         <p class="home__footer-text">
-          Diseñado y construido por
+          {{ t('footer.builtBy') }}
           <span class="gradient-text">Samuel Chávez</span>
         </p>
         <p class="home__footer-sub">
-          © {{ new Date().getFullYear() }} — Hecho con Vue.js
+          © {{ new Date().getFullYear() }} — {{ t('footer.madeWith') }}
         </p>
       </div>
     </footer>
