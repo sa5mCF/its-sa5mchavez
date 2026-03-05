@@ -1,28 +1,32 @@
 <script setup>
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
+
 /**
  * Projects Section
  * Showcases portfolio projects with links and tech tags
  */
 const projects = [
   {
-    title: 'Proyecto 1',
-    description: 'Descripción breve del proyecto. Qué problema resuelve y qué tecnologías usa.',
+    title: t('projects.placeholder.title', { n: 1 }),
+    description: t('projects.placeholder.description'),
     tags: ['Vue.js', 'Node.js', 'PostgreSQL'],
     link: '#',
     github: '#',
     featured: true,
   },
   {
-    title: 'Proyecto 2',
-    description: 'Descripción breve del proyecto. Qué problema resuelve y qué tecnologías usa.',
+    title: t('projects.placeholder.title', { n: 2 }),
+    description: t('projects.placeholder.description'),
     tags: ['React', 'Express', 'MongoDB'],
     link: '#',
     github: '#',
     featured: false,
   },
   {
-    title: 'Proyecto 3',
-    description: 'Descripción breve del proyecto. Qué problema resuelve y qué tecnologías usa.',
+    title: t('projects.placeholder.title', { n: 3 }),
+    description: t('projects.placeholder.description'),
     tags: ['Python', 'FastAPI', 'Docker'],
     link: '#',
     github: '#',
@@ -34,12 +38,12 @@ const projects = [
 <template>
   <section id="projects" class="projects section">
     <div class="container">
-      <span class="section-label">// proyectos</span>
+      <span class="section-label">{{ t('projects.label') }}</span>
       <h2 class="section-title">
-        Trabajo <span class="gradient-text">Destacado</span>
+        {{ t('projects.titleP1') }} <span class="gradient-text">{{ t('projects.titleP2') }}</span>
       </h2>
       <p class="section-subtitle">
-        Una selección de proyectos en los que he trabajado, desde aplicaciones web hasta herramientas de desarrollo.
+        {{ t('projects.subtitle') }}
       </p>
 
       <div class="projects__grid">

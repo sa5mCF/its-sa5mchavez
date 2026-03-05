@@ -1,26 +1,30 @@
 <script setup>
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
+
 /**
  * Skills Section
  * Displays technical skills organized by category
  */
 const skillCategories = [
   {
-    title: 'Frontend',
+    key: 'frontend',
     icon: '◆',
     skills: ['Vue.js', 'React', 'JavaScript', 'TypeScript', 'HTML/CSS', 'Tailwind'],
   },
   {
-    title: 'Backend',
+    key: 'backend',
     icon: '◈',
     skills: ['Node.js', 'Python', 'Express', 'NestJS', 'REST APIs', 'GraphQL'],
   },
   {
-    title: 'Bases de Datos',
+    key: 'database',
     icon: '◇',
     skills: ['PostgreSQL', 'MySQL', 'MongoDB', 'Redis', 'Prisma', 'SQL'],
   },
   {
-    title: 'DevOps & Tools',
+    key: 'devops',
     icon: '▣',
     skills: ['Git', 'Docker', 'CI/CD', 'AWS', 'Linux', 'Vercel'],
   },
@@ -30,23 +34,23 @@ const skillCategories = [
 <template>
   <section id="skills" class="skills section">
     <div class="container">
-      <span class="section-label">// habilidades</span>
+      <span class="section-label">{{ t('skills.label') }}</span>
       <h2 class="section-title">
-        Mi <span class="gradient-text">Stack</span> Tecnológico
+        {{ t('skills.titleP1') }} <span class="gradient-text">{{ t('skills.titleP2') }}</span> {{ t('skills.titleP3') }}
       </h2>
       <p class="section-subtitle">
-        Herramientas y tecnologías con las que trabajo día a día para crear soluciones robustas.
+        {{ t('skills.subtitle') }}
       </p>
 
       <div class="skills__grid">
         <div
           v-for="category in skillCategories"
-          :key="category.title"
+          :key="category.key"
           class="skills__category glass-card"
         >
           <div class="skills__category-header">
             <span class="skills__icon">{{ category.icon }}</span>
-            <h3 class="skills__category-title">{{ category.title }}</h3>
+            <h3 class="skills__category-title">{{ t(`skills.categories.${category.key}`) }}</h3>
           </div>
           <div class="skills__tags">
             <span

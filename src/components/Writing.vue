@@ -1,28 +1,32 @@
 <script setup>
+import { useI18n } from 'vue-i18n'
+
+const { t, locale } = useI18n()
+
 /**
  * Writing Section
  * Blog posts, articles, or technical writing showcase
  */
 const posts = [
   {
-    title: 'Artículo o Post 1',
-    excerpt: 'Un resumen breve del contenido del artículo. Puede ser sobre tecnología, desarrollo o aprendizaje.',
+    title: t('writing.placeholder.title', { n: 1 }),
+    excerpt: t('writing.placeholder.excerpt'),
     date: '2025-01-15',
     readTime: '5 min',
     tags: ['Vue.js', 'Frontend'],
     url: '#',
   },
   {
-    title: 'Artículo o Post 2',
-    excerpt: 'Un resumen breve del contenido del artículo. Puede ser sobre tecnología, desarrollo o aprendizaje.',
+    title: t('writing.placeholder.title', { n: 2 }),
+    excerpt: t('writing.placeholder.excerpt'),
     date: '2024-11-20',
     readTime: '8 min',
     tags: ['Backend', 'Node.js'],
     url: '#',
   },
   {
-    title: 'Artículo o Post 3',
-    excerpt: 'Un resumen breve del contenido del artículo. Puede ser sobre tecnología, desarrollo o aprendizaje.',
+    title: t('writing.placeholder.title', { n: 3 }),
+    excerpt: t('writing.placeholder.excerpt'),
     date: '2024-09-10',
     readTime: '4 min',
     tags: ['DevOps', 'Docker'],
@@ -31,7 +35,8 @@ const posts = [
 ]
 
 function formatDate(dateStr) {
-  return new Date(dateStr).toLocaleDateString('es-MX', {
+  const lang = locale.value === 'es' ? 'es-MX' : 'en-US'
+  return new Date(dateStr).toLocaleDateString(lang, {
     year: 'numeric',
     month: 'short',
     day: 'numeric',
@@ -42,12 +47,12 @@ function formatDate(dateStr) {
 <template>
   <section id="writing" class="writing section">
     <div class="container">
-      <span class="section-label">// escritura</span>
+      <span class="section-label">{{ t('writing.label') }}</span>
       <h2 class="section-title">
-        Notas &amp; <span class="gradient-text">Artículos</span>
+        {{ t('writing.titleP1') }} <span class="gradient-text">{{ t('writing.titleP2') }}</span>
       </h2>
       <p class="section-subtitle">
-        Reflexiones, tutoriales y aprendizajes que comparto con la comunidad.
+        {{ t('writing.subtitle') }}
       </p>
 
       <div class="writing__list">
@@ -60,7 +65,7 @@ function formatDate(dateStr) {
           <div class="writing__post-meta">
             <span class="writing__date">{{ formatDate(post.date) }}</span>
             <span class="writing__separator">·</span>
-            <span class="writing__read-time">{{ post.readTime }} lectura</span>
+            <span class="writing__read-time">{{ post.readTime }} {{ t('writing.readTime') }}</span>
           </div>
 
           <h3 class="writing__post-title">
