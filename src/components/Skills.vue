@@ -9,24 +9,54 @@ const { t } = useI18n()
  */
 const skillCategories = [
   {
-    key: 'frontend',
-    icon: '◆',
-    skills: ['Vue.js', 'React', 'JavaScript', 'TypeScript', 'HTML/CSS', 'Tailwind'],
+    key: 'languages',
+    icon: '⟨/⟩',
+    skills: ['Python', 'Go (Golang)', 'TypeScript', 'JavaScript', 'SQL'],
   },
   {
     key: 'backend',
     icon: '◈',
-    skills: ['Node.js', 'Python', 'Express', 'NestJS', 'REST APIs', 'GraphQL'],
+    skills: ['Flask', 'FastAPI', 'Django', 'Echo', 'Node.js', 'RESTful APIs', 'GraphQL (Graphene)', 'Microservices', 'API Design'],
+  },
+  {
+    key: 'frontend',
+    icon: '◆',
+    skills: ['React', 'Next.js', 'Vue.js'],
+  },
+  {
+    key: 'architecture',
+    icon: '⚙',
+    skills: ['DDD', 'Clean Architecture', 'Distributed Systems', 'Event-Driven', 'Async Processing', 'Financial Systems Modeling'],
+  },
+  {
+    key: 'cloud',
+    icon: '☁',
+    skills: ['AWS', 'Lambda', 'SQS', 'SNS', 'AuroraDB', 'Redshift', 'Docker', 'Terraform', 'CI/CD'],
   },
   {
     key: 'database',
     icon: '◇',
-    skills: ['PostgreSQL', 'MySQL', 'MongoDB', 'Redis', 'Prisma', 'SQL'],
+    skills: ['PostgreSQL', 'MySQL', 'AuroraDB'],
   },
   {
-    key: 'devops',
+    key: 'testing',
+    icon: '✓',
+    skills: ['PyTest', 'Unit Testing', 'TDD', 'Integration Testing', 'Mockery (Go)', 'Interface Mocking'],
+  },
+  {
+    key: 'monitoring',
+    icon: '📊',
+    skills: ['Grafana'],
+  },
+  {
+    key: 'tools',
     icon: '▣',
-    skills: ['Git', 'Docker', 'CI/CD', 'AWS', 'Linux', 'Vercel'],
+    skills: ['Git', 'Linux'],
+  },
+  {
+    key: 'additional',
+    icon: '♒',
+    skills: ['PHP', 'Magento', 'Laravel'],
   },
 ]
 </script>
@@ -70,7 +100,7 @@ const skillCategories = [
 <style scoped>
 .skills__grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: var(--space-lg);
   margin-top: var(--space-3xl);
 }

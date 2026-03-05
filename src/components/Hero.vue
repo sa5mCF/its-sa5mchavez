@@ -8,9 +8,9 @@ const { locale, t } = useI18n()
  * Full-screen intro with name, role, and CTA
  */
 const socials = [
-  { name: 'GitHub', url: 'https://github.com/sa5mchavez', icon: '⟨/⟩' },
-  { name: 'LinkedIn', url: '#', icon: 'in' },
-  { name: 'Email', url: 'mailto:hello@example.com', icon: '@' },
+  { name: 'GitHub', url: 'https://github.com/samEscom', icon: '⟨/⟩' },
+  { name: 'LinkedIn', url: 'https://www.linkedin.com/in/samchavez/', icon: 'in' },
+  { name: 'Email', url: 'mailto:sa5m.escom@gmail.com', icon: '@' },
 ]
 
 const toggleLanguage = () => {
