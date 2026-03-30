@@ -8,8 +8,8 @@ const { locale, t } = useI18n()
  * Full-screen intro with name, role, and CTA
  */
 const socials = [
-  { name: 'GitHub', url: 'https://github.com/samEscom', icon: '⟨/⟩' },
-  { name: 'LinkedIn', url: 'https://www.linkedin.com/in/samchavez/', icon: 'in' },
+  { name: 'GitHub', url: 'https://github.com/sa5mCF', icon: '⟨/⟩' },
+  { name: 'LinkedIn', url: 'https://www.linkedin.com/in/sa5mchavez/', icon: 'in' },
   { name: 'Email', url: 'mailto:sa5m.escom@gmail.com', icon: '@' },
 ]
 
