@@ -28,8 +28,10 @@ const toggleTheme = () => {
   try { localStorage.setItem('theme', theme.value) } catch {}
 }
 
-const toggleLanguage = () => {
-  locale.value = locale.value === 'es' ? 'en' : 'es'
+const languages = ['es', 'en', 'pt']
+
+const setLanguage = lang => {
+  locale.value = lang
   document.documentElement.lang = locale.value
   try { localStorage.setItem('locale', locale.value) } catch {}
 }
@@ -58,11 +60,17 @@ onMounted(() => {
       </nav>
 
       <div class="nav__controls">
-        <button class="nav__btn" @click="toggleLanguage" :aria-label="t('nav.language')">
-          <span :class="{ 'nav__on': locale === 'es' }">ES</span>
-          /
-          <span :class="{ 'nav__on': locale === 'en' }">EN</span>
-        </button>
+        <div class="nav__langs" role="group" :aria-label="t('nav.language')">
+          <template v-for="(lang, i) in languages" :key="lang">
+            <span v-if="i" aria-hidden="true">/</span>
+            <button
+              class="nav__lang"
+              :class="{ 'nav__on': locale === lang }"
+              :aria-pressed="locale === lang"
+              @click="setLanguage(lang)"
+            >{{ lang.toUpperCase() }}</button>
+          </template>
+        </div>
         <button class="nav__btn" @click="toggleTheme" :aria-label="t('nav.theme')">◐</button>
       </div>
     </div>
@@ -134,6 +142,28 @@ onMounted(() => {
 .nav__btn:hover {
   color: var(--color-text);
   border-color: var(--color-rule-strong);
+}
+
+.nav__langs {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  padding: var(--space-xs) var(--space-sm);
+  border: 1px solid var(--color-rule);
+  border-radius: 2px;
+}
+
+.nav__lang {
+  font: inherit;
+  color: inherit;
+  padding: 0 2px;
+}
+
+.nav__lang:hover {
+  color: var(--color-text);
 }
 
 .nav__on {

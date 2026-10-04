@@ -1,12 +1,14 @@
 import { createI18n } from 'vue-i18n'
+import pt from './pt'
 
 const messages = {
+    pt,
     es: {
         nav: { label: 'Principal', skills: 'Stack', experience: 'Experiencia', now: 'Ahora', influences: 'Influencias', language: 'Cambiar idioma', theme: 'Cambiar tema', skip: 'Saltar al contenido' },
         hero: {
             greeting: 'Hola, soy',
             role: 'Full Stack Developer & Software Engineer',
-            description: 'Construyo software con código limpio y arquitectura sólida, hoy entre backend, IA aplicada y sistemas financieros. Estudio filosofía porque programar y pensar bien comparten un oficio: definir con claridad.',
+            description: 'Soy ingeniero de software. Construyo sistemas donde el código importa, pero también las decisiones detrás de él. Backend, IA aplicada y arquitectura; filosofía para mantener claro el pensamiento.',
             ctaProjects: 'Ver Proyectos',
             ctaExperience: 'Mi Experiencia',
             ctaContact: 'Contacto',
@@ -187,7 +189,7 @@ const messages = {
         hero: {
             greeting: "Hi, I'm",
             role: 'Full Stack Developer & Software Engineer',
-            description: 'I build software with clean code and solid architecture, currently across backend, applied AI and financial systems. I study philosophy because programming and thinking well share one craft: defining things clearly.',
+            description: 'I am a software engineer. I build systems where the code matters, but so do the decisions behind it. Backend, applied AI and architecture; philosophy to keep my thinking clear.',
             ctaProjects: 'View Projects',
             ctaExperience: 'My Experience',
             ctaContact: 'Contact',
@@ -368,9 +370,11 @@ const messages = {
 function initialLocale() {
     try {
         const saved = localStorage.getItem('locale')
-        if (saved === 'es' || saved === 'en') return saved
+        if (saved === 'es' || saved === 'en' || saved === 'pt') return saved
     } catch {}
-    return navigator.language?.toLowerCase().startsWith('en') ? 'en' : 'es'
+    const lang = navigator.language?.toLowerCase() ?? ''
+    if (lang.startsWith('pt')) return 'pt'
+    return lang.startsWith('en') ? 'en' : 'es'
 }
 
 const i18n = createI18n({
