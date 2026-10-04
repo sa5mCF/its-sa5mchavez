@@ -1,8 +1,11 @@
 <script setup>
+import { ref, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { computed } from 'vue'
+import { useReveal } from '@/composables/useReveal'
 
 const { t, tm, rt } = useI18n()
+const root = ref(null)
+useReveal(root)
 
 const nowItems = computed(() => {
   const items = tm('now.items')
@@ -14,80 +17,62 @@ const nowItems = computed(() => {
 </script>
 
 <template>
-  <section id="now" class="now section">
+  <section id="now" ref="root" class="now section">
     <div class="container">
-      <div class="now__content">
-        <div class="now__divider"></div>
-        <span class="section-label">{{ t('now.label') }}</span>
-        <h2 class="section-title">{{ t('now.title') }}</h2>
-        <p class="section-subtitle section-subtitle--compact">{{ t('now.subtitle') }}</p>
+      <p class="section-label"><span class="section-label__num">III.</span>{{ t('now.label') }}</p>
+      <h2 class="section-title">{{ t('now.title') }}</h2>
+      <p class="section-subtitle">{{ t('now.subtitle') }}</p>
 
-        <ul class="now__list">
-          <li v-for="(item, index) in nowItems" :key="index" class="now__item">
-            <span class="now__bullet">•</span>
-            <span class="now__label">{{ item.label }}:</span>
-            <span class="now__value">{{ item.value }}</span>
-          </li>
-        </ul>
+      <dl class="now__list">
+        <div v-for="(item, index) in nowItems" :key="index" class="now__item reveal">
+          <dt class="now__label">{{ item.label }}</dt>
+          <dd class="now__value">{{ item.value }}</dd>
+        </div>
+      </dl>
 
-        <p class="now__updated">{{ t('now.updated') }}</p>
-      </div>
+      <p class="now__updated">{{ t('now.updated') }}</p>
     </div>
   </section>
 </template>
 
 <style scoped>
-.now {
-  padding: var(--space-3xl) 0;
-}
-
-.now__content {
-  max-width: 600px;
-}
-
-.now__divider {
-  width: 40px;
-  height: 2px;
-  background: var(--color-accent-primary-soft);
-  margin-bottom: var(--space-2xl);
-}
-
-.section-subtitle--compact {
-  font-size: var(--text-sm);
-  margin-bottom: var(--space-xl);
-  max-width: 100%;
-}
-
 .now__list {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-sm);
-  margin-bottom: var(--space-xl);
+  margin-top: var(--space-2xl);
+  border-top: 1px solid var(--color-rule);
+  max-width: 720px;
 }
 
 .now__item {
-  display: flex;
-  align-items: baseline;
-  gap: var(--space-sm);
-  font-size: var(--text-base);
-  color: var(--color-text-primary);
-}
-
-.now__bullet {
-  color: var(--color-accent-primary);
-  font-weight: 700;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: var(--space-xl);
+  padding: var(--space-md) 0;
+  border-bottom: 1px solid var(--color-rule);
 }
 
 .now__label {
-  font-weight: 600;
-  color: var(--color-text-primary);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  align-self: center;
 }
 
 .now__value {
-  color: var(--color-text-secondary);
+  font-family: var(--font-serif);
+  font-size: var(--text-lg);
+}
+
+@media (max-width: 768px) {
+  .now__item {
+    grid-template-columns: 1fr;
+    gap: var(--space-xs);
+  }
 }
 
 .now__updated {
+  margin-top: var(--space-lg);
   font-family: var(--font-mono);
   font-size: var(--text-xs);
   color: var(--color-text-muted);

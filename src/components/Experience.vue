@@ -1,13 +1,12 @@
 <script setup>
+import { ref, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { computed } from 'vue'
+import { useReveal } from '@/composables/useReveal'
 
 const { t, tm, rt } = useI18n()
+const root = ref(null)
+useReveal(root)
 
-/**
- * Experience Section
- * Timeline of professional experience
- */
 const experiences = computed(() => {
   const items = tm('experience.items')
   return Array.isArray(items) ? items.map(item => ({
@@ -22,166 +21,118 @@ const experiences = computed(() => {
 </script>
 
 <template>
-  <section id="experience" class="experience section">
+  <section id="experience" ref="root" class="experience section">
     <div class="container">
-      <span class="section-label">{{ t('experience.label') }}</span>
+      <p class="section-label"><span class="section-label__num">II.</span>{{ t('experience.label') }}</p>
       <h2 class="section-title">
-        {{ t('experience.titleP1') }} <span class="gradient-text">{{ t('experience.titleP2') }}</span>
+        {{ t('experience.titleP1') }} <span class="accent">{{ t('experience.titleP2') }}</span>
       </h2>
-      <p class="section-subtitle">
-        {{ t('experience.subtitle') }}
-      </p>
+      <p class="section-subtitle">{{ t('experience.subtitle') }}</p>
 
-      <div class="experience__timeline">
-        <div
-          v-for="(exp, index) in experiences"
-          :key="index"
-          class="experience__item"
-        >
-          <div class="experience__marker">
-            <div
-              class="experience__dot"
-              :class="{ 'experience__dot--active': exp.current }"
-            ></div>
-            <div v-if="index < experiences.length - 1" class="experience__line"></div>
+      <ol class="experience__list">
+        <li v-for="(exp, index) in experiences" :key="index" class="experience__item reveal">
+          <div class="experience__meta">
+            <span class="experience__index">{{ index + 1 }}.</span>
+            <span class="experience__period">{{ exp.period }}</span>
+            <span v-if="exp.current" class="experience__current" :aria-label="t('experience.current')">●</span>
           </div>
 
-          <div class="experience__card glass-card">
-            <div class="experience__card-header">
-              <div>
-                <h3 class="experience__role">{{ exp.role }}</h3>
-                <span class="experience__company">{{ exp.company }}</span>
-              </div>
-              <span class="experience__period">{{ exp.period }}</span>
-            </div>
-            
-            <ul class="experience__description-list">
-              <li 
-                v-for="(point, pIndex) in exp.description" 
-                :key="pIndex"
-                class="experience__description-item"
-              >
-                {{ point }}
-              </li>
+          <div class="experience__body">
+            <h3 class="experience__role">
+              {{ exp.role }}
+              <span class="experience__company">— {{ exp.company }}</span>
+            </h3>
+
+            <ul class="experience__points">
+              <li v-for="(point, i) in exp.description" :key="i">{{ point }}</li>
             </ul>
 
             <div class="experience__tags">
-              <span
-                v-for="tag in exp.tags"
-                :key="tag"
-                class="tag"
-              >
-                {{ tag }}
-              </span>
+              <span v-for="tag in exp.tags" :key="tag" class="tag">{{ tag }}</span>
             </div>
           </div>
-        </div>
-      </div>
+        </li>
+      </ol>
     </div>
   </section>
 </template>
 
 <style scoped>
-.experience__timeline {
+.experience__list {
   margin-top: var(--space-3xl);
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-lg);
+  border-top: 1px solid var(--color-rule);
 }
 
 .experience__item {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 2.2fr;
   gap: var(--space-xl);
+  padding: var(--space-2xl) 0;
+  border-bottom: 1px solid var(--color-rule);
 }
 
-.experience__marker {
+.experience__meta {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding-top: var(--space-xl);
-  flex-shrink: 0;
-  width: 20px;
+  gap: var(--space-xs);
 }
 
-.experience__dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: var(--color-surface-card);
-  border: 2px solid var(--color-text-muted);
-  flex-shrink: 0;
-  transition: all var(--transition-base);
-}
-
-.experience__dot--active {
-  background: var(--color-accent-primary);
-  border-color: var(--color-accent-primary);
-  box-shadow: 0 0 12px var(--color-accent-primary-glow);
-}
-
-.experience__line {
-  width: 2px;
-  flex: 1;
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.1), transparent);
-  margin-top: var(--space-sm);
-}
-
-.experience__card {
-  flex: 1;
-  padding: var(--space-xl);
-}
-
-.experience__card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: var(--space-md);
-  gap: var(--space-md);
-}
-
-.experience__role {
-  font-size: var(--text-xl);
-  font-weight: 700;
-}
-
-.experience__company {
-  font-family: var(--font-mono);
-  font-size: var(--text-sm);
-  color: var(--color-accent-secondary);
+.experience__index {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: var(--text-2xl);
+  line-height: 1;
+  color: var(--color-accent);
 }
 
 .experience__period {
   font-family: var(--font-mono);
   font-size: var(--text-xs);
   color: var(--color-text-muted);
-  white-space: nowrap;
-  padding: var(--space-xs) var(--space-sm);
-  background: rgba(255, 255, 255, 0.04);
-  border-radius: var(--radius-sm);
+  letter-spacing: 0.04em;
 }
 
-.experience__description-list {
-  padding-left: var(--space-md);
+.experience__current {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-accent);
+}
+
+.experience__role {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: var(--text-xl);
+  line-height: 1.25;
   margin-bottom: var(--space-lg);
-  list-style: none;
 }
 
-.experience__description-item {
-  position: relative;
+.experience__company {
+  font-weight: 300;
+  font-style: italic;
   color: var(--color-text-secondary);
-  line-height: 1.6;
-  margin-bottom: var(--space-sm);
-  padding-left: var(--space-lg);
-  font-size: var(--text-base);
 }
 
-.experience__description-item::before {
-  content: '→';
+.experience__points {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  max-width: var(--measure);
+  margin-bottom: var(--space-lg);
+  color: var(--color-text-secondary);
+  font-size: var(--text-sm);
+  line-height: 1.7;
+}
+
+.experience__points li {
+  position: relative;
+  padding-left: 1.25rem;
+}
+
+.experience__points li::before {
+  content: '–';
   position: absolute;
   left: 0;
-  color: var(--color-accent-primary);
-  font-weight: 700;
-  opacity: 0.7;
+  color: var(--color-accent);
 }
 
 .experience__tags {
@@ -191,12 +142,15 @@ const experiences = computed(() => {
 }
 
 @media (max-width: 768px) {
-  .experience__marker {
-    display: none;
+  .experience__item {
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
   }
 
-  .experience__card-header {
-    flex-direction: column;
+  .experience__meta {
+    flex-direction: row;
+    align-items: baseline;
+    gap: var(--space-md);
   }
 }
 </style>
