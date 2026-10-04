@@ -11,9 +11,9 @@ export default {
     },
     skills: {
         label: 'habilidades',
-        titleP1: 'Meu',
+        titleP1: 'Minha',
         titleP2: 'Stack',
-        titleP3: 'Tecnológico',
+        titleP3: 'Tecnológica',
         subtitle: 'Ferramentas e tecnologias com as quais trabalho no dia a dia para criar soluções robustas.',
         categories: {
             languages: 'Linguagens de Programação',
@@ -31,8 +31,8 @@ export default {
     },
     projects: {
         label: 'projetos',
-        titleP1: 'Trabalho',
-        titleP2: 'Destacado',
+        titleP1: 'Trabalhos de',
+        titleP2: 'Destaque',
         subtitle: 'Uma seleção de projetos nos quais trabalhei, de aplicações web a ferramentas de desenvolvimento.',
         placeholder: {
             title: 'Projeto {n}',
@@ -65,7 +65,7 @@ export default {
                 period: 'Setembro 2024 - Dezembro 2025',
                 description: [
                     'Projetei e implementei um microsserviço de Empréstimos totalmente desacoplado, seguindo princípios de arquitetura de microsserviços.',
-                    'Modelei o domínio financeiro completo, incluindo ciclo de vida de empréstimos, parcelas, cronograma e lógica de amortização francesa.',
+                    'Modelei o domínio financeiro completo, incluindo ciclo de vida de empréstimos, parcelas, cronograma e lógica do Sistema de Amortização Francês (Tabela Price).',
                     'Construí um motor de processamento de pagamentos transacionais compatível com pagamentos parciais, exatos e excedentes, com redistribuição do excedente entre parcelas.',
                     'Implementei fluxos de trabalho idempotentes, garantindo a consistência financeira e evitando a dupla aplicação de pagamentos.'
                 ],
