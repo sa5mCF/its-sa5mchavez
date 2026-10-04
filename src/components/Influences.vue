@@ -1,8 +1,11 @@
 <script setup>
+import { ref, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { computed } from 'vue'
+import { useReveal } from '@/composables/useReveal'
 
 const { t, tm, rt } = useI18n()
+const root = ref(null)
+useReveal(root)
 
 const influences = computed(() => {
   const items = tm('influences.items')
@@ -14,47 +17,62 @@ const influences = computed(() => {
 </script>
 
 <template>
-  <section id="influences" class="influences section">
+  <section id="influences" ref="root" class="influences section">
     <div class="container">
-      <span class="section-label">{{ t('influences.label') }}</span>
+      <p class="section-label"><span class="section-label__num">IV.</span>{{ t('influences.label') }}</p>
       <h2 class="section-title">{{ t('influences.title') }}</h2>
+      <p class="section-subtitle">{{ t('influences.subtitle') }}</p>
 
-      <div class="influences__grid">
-        <div v-for="(influence, index) in influences" :key="index" class="influence-card glass-card">
-          <h3 class="influence-card__name">{{ influence.name }}</h3>
-          <p class="influence-card__description">{{ influence.description }}</p>
-        </div>
-      </div>
+      <ol class="influences__list">
+        <li v-for="(influence, index) in influences" :key="index" class="influences__item reveal">
+          <span class="influences__num">{{ index + 1 }}</span>
+          <h3 class="influences__name">{{ influence.name }}</h3>
+          <p class="influences__description">{{ influence.description }}</p>
+        </li>
+      </ol>
     </div>
   </section>
 </template>
 
 <style scoped>
-.influences {
-  padding-bottom: var(--space-5xl);
-}
-
-.influences__grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: var(--space-lg);
+.influences__list {
   margin-top: var(--space-2xl);
+  border-top: 1px solid var(--color-rule);
 }
 
-.influence-card {
-  padding: var(--space-xl);
+.influences__item {
+  display: grid;
+  grid-template-columns: 2rem 1fr 1.6fr;
+  align-items: baseline;
+  gap: var(--space-lg);
+  padding: var(--space-lg) 0;
+  border-bottom: 1px solid var(--color-rule);
 }
 
-.influence-card__name {
-  font-size: var(--text-lg);
-  font-weight: 700;
-  margin-bottom: var(--space-sm);
-  color: var(--color-text-primary);
+.influences__num {
+  font-family: var(--font-serif);
+  font-style: italic;
+  color: var(--color-accent);
 }
 
-.influence-card__description {
+.influences__name {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: var(--text-xl);
+}
+
+.influences__description {
   font-size: var(--text-sm);
   color: var(--color-text-secondary);
-  line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+  .influences__item {
+    grid-template-columns: 1.5rem 1fr;
+  }
+
+  .influences__description {
+    grid-column: 2;
+  }
 }
 </style>
